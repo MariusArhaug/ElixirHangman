@@ -1,7 +1,7 @@
 defmodule Patterns do
 
 	def switch_tuple({a, b}) do
-		IO.puts " #{b} #{a} "
+		{b,a}
 	end
 
 	def check_tuple(:error) do
