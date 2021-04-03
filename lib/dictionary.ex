@@ -1,13 +1,12 @@
 defmodule Dictionary do
-
   def random_word() do
     word_list()
     |> Enum.random()
   end
 
   def word_list do
-    Path.expand("./lib/assets/words.txt")
-    |> Path.absname
+    "./assets/words.txt"
+    |> Path.expand(__DIR__)
     |> File.read!()
     |> String.split(~r/\n/)
   end
