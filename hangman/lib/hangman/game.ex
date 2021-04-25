@@ -23,8 +23,9 @@ defmodule Hangman.Game do
   end
 
   def make_move(game, guess) do
-    accept_move(game, guess, MapSet.member?(game.used, guess))
+    check_move(game, guess, guess != String.upcase(guess))
   end
+
 
   def tally(game) do
     %{
@@ -35,6 +36,14 @@ defmodule Hangman.Game do
   end
 
   #--------------------Private Functions----------------------------#
+
+  defp check_move(game, guess, _is_lower_case = true) do
+    accept_move(game, guess, MapSet.member?(game.used, guess))
+  end
+
+  defp check_move(game, _guess, _is_lower_case) do
+    game
+  end
 
   defp accept_move(game, _guess, _already_guessed = true) do
     Map.put(game, :game_state, :already_used)
@@ -74,7 +83,7 @@ defmodule Hangman.Game do
   end
 
   defp reveal_letter(letter, _in_word = true), do: letter
-  defp reveal_letter(letter, _not_in_word), do: "_"
+  defp reveal_letter(_letter, _not_in_word), do: "_"
 
   defp maybe_won(true), do: :won
   defp maybe_won(_), do: :good_guess
