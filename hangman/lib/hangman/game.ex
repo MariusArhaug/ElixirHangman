@@ -17,13 +17,14 @@ defmodule Hangman.Game do
     new_game(Dictionary.random_word)
   end
 
-
   def make_move(game = %{ game_state: state }, _guess) when state in [:won, :lost] do
-    game
+    game |>
+    return_with_tally()
   end
 
   def make_move(game, guess) do
     check_move(game, guess, guess != String.upcase(guess))
+    |> return_with_tally()
   end
 
 
@@ -32,11 +33,12 @@ defmodule Hangman.Game do
       game_state: game.game_state,
       turns_left: game.turns_left,
       letters: game.letters |> reveal_guessed(game.used),
-      used: game.used
+      used: game.used |> MapSet.to_list()
     }
   end
 
   #--------------------Private Functions----------------------------#
+  defp return_with_tally(game), do: { game, tally(game) }
 
   defp check_move(game, guess, _is_lower_case = true) do
     accept_move(game, guess, MapSet.member?(game.used, guess))
