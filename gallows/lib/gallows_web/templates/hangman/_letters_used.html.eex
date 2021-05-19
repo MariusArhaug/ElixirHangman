@@ -1,0 +1,1 @@
+<p>Letters used: <br> <%= @used |> Enum.join(", ")%></p>
