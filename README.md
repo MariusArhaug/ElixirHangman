@@ -1,6 +1,6 @@
-# Dictionary
+# Hangman
 
-**TODO: Add description**
+Simple Hangman game created with `Elixir`. 
 
 ## Installation
 
